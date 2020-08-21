@@ -26,6 +26,10 @@ public class Product implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories = new HashSet<>();
 
+    @OneToMany(mappedBy = "id.product")
+    private Set<OrdemItem> items = new HashSet<>();
+
+
     public Product() {
     }
 
@@ -86,6 +90,10 @@ public class Product implements Serializable {
         return categories;
     }
 
+    public void setItems(Set<OrdemItem> items) {
+        this.items = items;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -95,7 +103,7 @@ public class Product implements Serializable {
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()  {
         return Objects.hash(getId());
     }
 }

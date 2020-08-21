@@ -6,11 +6,13 @@ import estudo.spring.entities.enums.OrderStatus;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_order")
-public class Order implements Serializable {
+public class   Order implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -27,6 +29,20 @@ public class Order implements Serializable {
     @ManyToOne
     @JoinColumn(name = "client_id")
     private User client;
+
+    @OneToMany(mappedBy = "id.order")
+    private Set<OrdemItem> items = new HashSet<>();
+
+    private Payment payment;
+
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
+    }
 
     public Order() {
     }
@@ -66,6 +82,10 @@ public class Order implements Serializable {
 
     public OrderStatus getOrderStatus() {
         return OrderStatus.valueOf(orderStatus);
+    }
+
+    public Set<OrdemItem> getItems(){
+        return items;
     }
 
     public void setOrderStatus(OrderStatus orderStatus) {

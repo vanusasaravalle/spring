@@ -1,5 +1,6 @@
 package estudo.spring.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import estudo.spring.entities.pk.OrdenItemPk;
 
 import javax.persistence.EmbeddedId;
@@ -16,7 +17,7 @@ public class OrdemItem implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @EmbeddedId
-    private OrdenItemPk id;
+    private OrdenItemPk id = new OrdenItemPk();
 
     private Integer quantity;
     private Double price;
@@ -31,6 +32,7 @@ public class OrdemItem implements Serializable {
         this.price = price;
     }
 
+    @JsonIgnore
     public Order getOrder(){
         return id.getOrder();
     }
